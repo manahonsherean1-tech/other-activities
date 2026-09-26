@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CS Lab Reservation</title>
+  <style>
+    body { font-family: sans-serif; margin: 30px; }
+    form { display: flex; gap: 10px; margin-bottom: 20px; }
+    input, select, button { padding: 8px; }
+    ul { list-style: none; padding: 0; }
+    li { background: #eef; margin-bottom: 8px; padding: 10px; display: flex; justify-content: space-between; width: 400px; }
+  </style>
+</head>
+<body>
+
+  <h2>CS Computer Lab Reservation</h2>
+
+  <form id="resForm">
+    <input type="text" id="studentId" placeholder="Student ID" required>
+    <select id="labRoom">
+      <option value="Lab 301">Lab 301</option>
+      <option value="Lab 302">Lab 302</option>
+      <option value="Mac Lab">Mac Lab</option>
+    </select>
+    <input type="time" id="resTime" required>
+    <button type="submit">Reserve</button>
+  </form>
+
+  <h3>Current Reservations</h3>
+  <ul id="resList"></ul>
+
+  <script>
+    const form = document.getElementById('resForm');
+    const resList = document.getElementById('resList');
+
+    // Load from localStorage
+    let reservations = JSON.parse(localStorage.getItem('lab_res')) || [];
+
+    function saveAndRender() {
+      localStorage.setItem('lab_res', JSON.stringify(reservations));
+      resList.innerHTML = '';
+
+      reservations.forEach((res, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span><strong>${res.id}</strong> - ${res.room} @ ${res.time}</span>
+          <button onclick="cancelRes(${index})">Cancel</button>
+        `;
+        resList.appendChild(li);
+      });
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = document.getElementById('studentId').value;
+      const room = document.getElementById('labRoom').value;
+      const time = document.getElementById('resTime').value;
+
+      reservations.push({ id, room, time });
+      form.reset();
+      saveAndRender();
+    });
+
+    function cancelRes(index) {
+      reservations.splice(index, 1);
+      saveAndRender();
+    }
+
+    // Initial render
+    saveAndRender();
+  </script>
+</body>
+</html>
