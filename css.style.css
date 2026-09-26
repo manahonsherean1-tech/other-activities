@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f4f6f8;
+}
+
+#search {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h4 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+}
+
+.card p {
+  margin: 3px 0;
+  font-size: 13px;
+  color: #555;
+}
